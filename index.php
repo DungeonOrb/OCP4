@@ -13,23 +13,23 @@ try {
     switch ($action) {
         // Pages accessibles à tous.
         case 'home':
-            $articleController = new ArticleController();
-            $articleController->showHome();
+            $livreController = new LivreController();
+            $livreController->showHome();
             break;
 
         case 'apropos':
-            $articleController = new ArticleController();
-            $articleController->showApropos();
+            $livreController = new LivreController();
+            $livreController->showApropos();
             break;
         
-        case 'showArticle': 
-            $articleController = new ArticleController();
-            $articleController->showArticle();
+        case 'showlivre': 
+            $livreController = new LivreController();
+            $livreController->showlivre();
             break;
 
-        case 'addArticle':
-            $articleController = new ArticleController();
-            $articleController->addArticle();
+        case 'addlivre':
+            $livreController = new LivreController();
+            $livreController->addlivre();
             break;
 
         case 'addComment':
@@ -59,24 +59,19 @@ try {
             $adminController->disconnectUser();
             break;
 
-        case 'showUpdateArticleForm':
+        case 'showUpdatelivreForm':
             $adminController = new AdminController();
-            $adminController->showUpdateArticleForm();
+            $adminController->showUpdatelivreForm();
             break;
 
-        case 'updateArticle': 
+        case 'updatelivre': 
             $adminController = new AdminController();
-            $adminController->updateArticle();
+            $adminController->updatelivre();
             break;
 
-        case 'deleteArticle':
+        case 'deletelivre':
             $adminController = new AdminController();
-            $adminController->deleteArticle();
-            break;
-
-        case 'deleteComment':
-            $adminController = new AdminController();
-            $adminController->deleteComment();
+            $adminController->deletelivre();
             break;
 
         case 'monitoring':

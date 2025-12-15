@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * Classe qui gère les livrees.
+ */
+class LivreManager extends AbstractEntityManager 
+{
+    /**
+     * Récupère tous les livres.
+     * @return array : un tableau d'objets Livre.
+     */
+    public function getAllLivres() : array
+    {
+        $sql = "SELECT * FROM livre";
+        $result = $this->db->query($sql);
+        $livres = [];
+
+        while ($livre = $result->fetch()) {
+            $livres[] = new Livre($livre);
+        }
+        return $livres;
+    }
+    
+    /**
+     * Récupère un livre par son id.
+     * @param int $id : l'id de l'livre.
+     * @return Livre|null : un objet livre ou null si l'livre n'existe pas.
+     */
+    public function getlivreById(int $id) : ?Livre
+    {
+        $sql = "SELECT * FROM livre WHERE id = :id";
+        $result = $this->db->query($sql, ['id' => $id]);
+        $livre = $result->fetch();
+        if ($livre) {
+            $updateSql = "UPDATE livre SET views = views + 1 WHERE id = :id";
+            $this->db->query($updateSql, ['id' => $id]);
+            return new Livre($livre);
+        }
+        return null;
+    }
+
+    /**
+     * Ajoute ou modifie un livre.
+     * On sait si l'livre est un nouvel livre car son id sera -1.
+     * @param livre $livre : l'livre à ajouter ou modifier.
+     * @return void
+     */
+    public function addOrUpdatelivre(Livre $livre) : void 
+    {
+        if ($livre->getId() == -1) {
+            $this->addlivre($livre);
+        } else {
+            $this->updatelivre($livre);
+        }
+    }
+
+    /**
+     * Ajoute un livre.
+     * @param livre $livre : l'livre à ajouter.
+     * @return void
+     */
+    public function addlivre(Livre $livre) : void
+    {
+        $sql = "INSERT INTO livre (id_user, title, content, date_creation) VALUES (:id_user, :title, :content, NOW())";
+        $this->db->query($sql, [
+            'id_user' => $livre->getIdUser(),
+            'title' => $livre->getTitle(),
+            'content' => $livre->getContent()
+        ]);
+    }
+
+    /**
+     * Modifie un livre.
+     * @param livre $livre : l'livre à modifier.
+     * @return void
+     */
+    public function updatelivre(Livre $livre) : void
+    {
+        $sql = "UPDATE livre SET title = :title, content = :content, date_update = NOW() WHERE id = :id";
+        $this->db->query($sql, [
+            'title' => $livre->getTitle(),
+            'content' => $livre->getContent(),
+            'id' => $livre->getId()
+        ]);
+    }
+
+    /**
+     * Supprime un livre.
+     * @param int $id : l'id de l'livre à supprimer.
+     * @return void
+     */
+    public function deletelivre(int $id) : void
+    {
+        $sql = "DELETE FROM livre WHERE id = :id";
+        $this->db->query($sql, ['id' => $id]);
+    }
+}

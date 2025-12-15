@@ -14,14 +14,14 @@ class AdminController {
         // On vérifie que l'utilisateur est connecté.
         $this->checkIfUserIsConnected();
 
-        // On récupère les articles.
-        $articleManager = new ArticleManager();
-        $articles = $articleManager->getAllArticles();
+        // On récupère les livres.
+        $livreManager = new LivreManager();
+        $livres = $livreManager->getAlllivres();
 
         // On affiche la page d'administration.
         $view = new View("Administration");
         $view->render("admin", [
-            'articles' => $articles
+            'livres' => $livres
         ]);
     }
 
@@ -97,38 +97,38 @@ class AdminController {
     }
 
     /**
-     * Affichage du formulaire d'ajout d'un article.
+     * Affichage du formulaire d'ajout d'un livre.
      * @return void
      */
-    public function showUpdateArticleForm() : void 
+    public function showUpdatelivreForm() : void 
     {
         $this->checkIfUserIsConnected();
 
-        // On récupère l'id de l'article s'il existe.
+        // On récupère l'id de l'livre s'il existe.
         $id = Utils::request("id", -1);
 
-        // On récupère l'article associé.
-        $articleManager = new ArticleManager();
-        $article = $articleManager->getArticleById($id);
+        // On récupère l'livre associé.
+        $livreManager = new LivreManager();
+        $livre = $livreManager->getLivreById($id);
 
-        // Si l'article n'existe pas, on en crée un vide. 
-        if (!$article) {
-            $article = new Article();
+        // Si l'livre n'existe pas, on en crée un vide. 
+        if (!$livre) {
+            $livre = new Livre();
         }
 
-        // On affiche la page de modification de l'article.
-        $view = new View("Edition d'un article");
-        $view->render("updateArticleForm", [
-            'article' => $article
+        // On affiche la page de modification de l'livre.
+        $view = new View("Edition d'un livre");
+        $view->render("updatelivreForm", [
+            'livre' => $livre
         ]);
     }
 
     /**
-     * Ajout et modification d'un article. 
-     * On sait si un article est ajouté car l'id vaut -1.
+     * Ajout et modification d'un livre. 
+     * On sait si un livre est ajouté car l'id vaut -1.
      * @return void
      */
-    public function updateArticle() : void 
+    public function updatelivre() : void 
     {
         $this->checkIfUserIsConnected();
 
@@ -142,17 +142,17 @@ class AdminController {
             throw new Exception("Tous les champs sont obligatoires. 2");
         }
 
-        // On crée l'objet Article.
-        $article = new Article([
-            'id' => $id, // Si l'id vaut -1, l'article sera ajouté. Sinon, il sera modifié.
+        // On crée l'objet livre.
+        $livre = new Livre([
+            'id' => $id, // Si l'id vaut -1, l'livre sera ajouté. Sinon, il sera modifié.
             'title' => $title,
             'content' => $content,
             'id_user' => $_SESSION['idUser']
         ]);
 
-        // On ajoute l'article.
-        $articleManager = new ArticleManager();
-        $articleManager->addOrUpdateArticle($article);
+        // On ajoute l'livre.
+        $livreManager = new livreManager();
+        $livreManager->addOrUpdatelivre($livre);
 
         // On redirige vers la page d'administration.
         Utils::redirect("admin");
@@ -160,18 +160,18 @@ class AdminController {
 
 
     /**
-     * Suppression d'un article.
+     * Suppression d'un livre.
      * @return void
      */
-    public function deleteArticle() : void
+    public function deletelivre() : void
     {
         $this->checkIfUserIsConnected();
 
         $id = Utils::request("id", -1);
 
-        // On supprime l'article.
-        $articleManager = new ArticleManager();
-        $articleManager->deleteArticle($id);
+        // On supprime l'livre.
+        $livreManager = new livreManager();
+        $livreManager->deletelivre($id);
        
         // On redirige vers la page d'administration.
         Utils::redirect("admin");
@@ -182,16 +182,5 @@ class AdminController {
         $view = new View("Monitoring");
         $view->render("monitoring");
     }
-    public function deleteComment() : void
-    {
-        $this->checkIfUserIsConnected();
 
-        $id = Utils::request("id", -1);
-
-        // On supprime l'article.
-        $commentmanager = new CommentManager();
-        $commentmanager->deleteComment($id);
-
-        Utils::redirect("admin");
-    }
 }
