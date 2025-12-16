@@ -4,9 +4,9 @@
  * Entité livre, un livre est défini par les champs
  * id, id_user, title, content, date_creation, date_update, views
  */
- class Livre extends AbstractEntity 
- {
-    private string $title = "";
+class Livre extends AbstractEntity
+{
+    private string $titre = "";
     private string $auteur = "";
     private string $content = "";
     private string $image = "";
@@ -16,7 +16,7 @@
      * Setter pour l'id de l'utilisateur. 
      * @param int $idUser
      */
-    public function setIdUser(int $idUser) : void 
+    public function setIdUser(int $idUser): void
     {
         $this->idUser = $idUser;
     }
@@ -25,39 +25,47 @@
      * Getter pour l'id de l'utilisateur.
      * @return int
      */
-    public function getIdUser() : int 
+    public function getIdUser(): int
     {
         return $this->idUser;
     }
 
     /**
      * Setter pour le titre.
-     * @param string $title
+     * @param string $titre
      */
-    public function setTitle(string $title) : void 
+    public function setTitre(string $titre): void
     {
-        $this->title = $title;
+        $this->titre = $titre;
     }
 
     /**
      * Getter pour le titre.
      * @return string
      */
-    public function getTitle() : string 
+    public function getTitre(): string
     {
-        return $this->title;
+        return $this->titre;
     }
 
     /**
      * Setter pour le contenu.
      * @param string $content
      */
-    public function setContent(string $content) : void 
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
+    public function setAuteur(string $auteur): void
+    {
+        $this->auteur = $auteur;
+    }
 
-    
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
+    }
+
     /**
      * Getter pour le contenu.
      * Retourne les $length premiers caractères du contenu.
@@ -66,7 +74,7 @@
      * Si le contenu est plus grand que $length, on retourne les $length premiers caractères avec "..." à la fin.
      * @return string
      */
-    public function getContent(int $length = -1) : string 
+    public function getContent(int $length = -1): string
     {
         if ($length > 0) {
             // Ici, on utilise mb_substr et pas substr pour éviter de couper un caractère en deux (caractère multibyte comme les accents).
@@ -78,4 +86,16 @@
         }
         return $this->content;
     }
- }
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+    public function getAuteur(): string
+    {
+        return $this->auteur;
+    }
+    public function getVendeur(): int
+    {
+        return $this->idUser;
+    }
+}

@@ -21,8 +21,8 @@ try {
             $livreController = new LivreController();
             $livreController->showApropos();
             break;
-        
-        case 'showlivre': 
+
+        case 'livres':
             $livreController = new LivreController();
             $livreController->showlivre();
             break;
@@ -39,7 +39,7 @@ try {
 
 
         // Section admin & connexion. 
-        case 'admin': 
+        case 'admin':
             $adminController = new AdminController();
             $adminController->showAdmin();
             break;
@@ -49,7 +49,7 @@ try {
             $adminController->displayConnectionForm();
             break;
 
-        case 'connectUser': 
+        case 'connectUser':
             $adminController = new AdminController();
             $adminController->connectUser();
             break;
@@ -64,7 +64,7 @@ try {
             $adminController->showUpdatelivreForm();
             break;
 
-        case 'updatelivre': 
+        case 'updatelivre':
             $adminController = new AdminController();
             $adminController->updatelivre();
             break;
@@ -78,7 +78,10 @@ try {
             $adminController = new AdminController();
             $adminController->displayMonitoring();
             break;
-
+        case 'livre':
+            $controller = new LivreController();
+            $controller->showDetail();
+            break;
         default:
             throw new Exception("La page demandée n'existe pas.");
     }

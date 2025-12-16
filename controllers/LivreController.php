@@ -1,12 +1,12 @@
-<?php 
+<?php
 
-class LivreController 
+class LivreController
 {
     /**
      * Affiche la page d'accueil.
      * @return void
      */
-    public function showHome() : void
+    public function showHome(): void
     {
         $livreManager = new livreManager();
         $livres = $livreManager->getAlllivres();
@@ -19,26 +19,27 @@ class LivreController
      * Affiche le détail d'un livre.
      * @return void
      */
-    public function showlivre() : void
-    {
-        // Récupération de l'id de l'livre demandé.
-        $id = Utils::request("id", -1);
+    public function showlivre(): void
+{
+    $livreManager = new LivreManager();
 
-        $livreManager = new LivreManager();
-        $livre = $livreManager->getlivreById($id);
-        
-        if (!$livre) {
-            throw new Exception("Le livre demandé n'existe pas.");
-        }
+    $q = isset($_GET['q']) ? trim($_GET['q']) : '';
 
-        $view = new View($livre->getTitle());
+    if ($q !== '') {
+        $livres = $livreManager->searchLivresByTitle($q);
+    } else {
+        $livres = $livreManager->getAllLivres();
     }
+
+    $view = new View("Livres");
+    $view->render("livres", ['livres' => $livres]);
+}
 
     /**
      * Affiche le formulaire d'ajout d'un livre.
      * @return void
      */
-    public function addlivre() : void
+    public function addlivre(): void
     {
         $view = new View("Ajouter un livre");
         $view->render("addlivre");
@@ -48,8 +49,27 @@ class LivreController
      * Affiche la page "à propos".
      * @return void
      */
-    public function showApropos() {
+    public function showApropos()
+    {
         $view = new View("A propos");
         $view->render("apropos");
     }
+    public function showDetail(): void
+{
+    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+        header('Location: main.php?action=livres');
+        exit;
+    }
+
+    $livreManager = new LivreManager();
+    $livre = $livreManager->getLivreById((int)$_GET['id']);
+
+    if (!$livre) {
+        header('Location: main.php?action=livres');
+        exit;
+    }
+
+    $view = new View("Détail du livre");
+    $view->render("livre_detail", ['livre' => $livre]);
+}
 }

@@ -20,7 +20,7 @@
     <div class="book-grid">
         <?php foreach ($livres as $livre): ?>
             <div class="book-card">
-                <h2><?= $livre->getTitle() ?></h2>
+                <h2><?= $livre->getTitre() ?></h2>
                 <p><?= $livre->getContent(400) ?></p>
             </div>
         <?php endforeach; ?>

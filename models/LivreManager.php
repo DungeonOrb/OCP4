@@ -19,6 +19,16 @@ class LivreManager extends AbstractEntityManager
             $livres[] = new Livre($livre);
         }
         return $livres;
+
+        $q = isset($_GET['q']) ? trim($_GET['q']) : '';
+
+if ($q === '') {
+    $livres = $this->livreManager->getAllLivres();
+} else {
+    $livres = $this->livreManager->searchLivresByTitle($q);
+}
+
+$this->view->render('livres', ['livres' => $livres]);
     }
     
     /**
@@ -64,7 +74,7 @@ class LivreManager extends AbstractEntityManager
         $sql = "INSERT INTO livre (id_user, title, content, date_creation) VALUES (:id_user, :title, :content, NOW())";
         $this->db->query($sql, [
             'id_user' => $livre->getIdUser(),
-            'title' => $livre->getTitle(),
+            'title' => $livre->getTitre(),
             'content' => $livre->getContent()
         ]);
     }
@@ -78,7 +88,7 @@ class LivreManager extends AbstractEntityManager
     {
         $sql = "UPDATE livre SET title = :title, content = :content, date_update = NOW() WHERE id = :id";
         $this->db->query($sql, [
-            'title' => $livre->getTitle(),
+            'title' => $livre->getTitre(),
             'content' => $livre->getContent(),
             'id' => $livre->getId()
         ]);
@@ -94,4 +104,17 @@ class LivreManager extends AbstractEntityManager
         $sql = "DELETE FROM livre WHERE id = :id";
         $this->db->query($sql, ['id' => $id]);
     }
+    public function searchLivresByTitle(string $query): array
+{
+    $sql = "SELECT * FROM livre WHERE titre LIKE :q";
+    $result = $this->db->query($sql, [
+        'q' => '%' . $query . '%'
+    ]);
+
+    $livres = [];
+    while ($livre = $result->fetch()) {
+        $livres[] = new Livre($livre);
+    }
+    return $livres;
+}
 }
