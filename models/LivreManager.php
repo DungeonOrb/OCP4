@@ -118,4 +118,18 @@ class LivreManager extends AbstractEntityManager
         }
         return $livres;
     }
+    /**
+     * récupère les livres d'un utilisateur
+     */
+    public function getLivresByUserId(int $userId): array
+{
+    $sql = "SELECT * FROM livre WHERE id_user = :id_user ORDER BY id DESC";
+    $res = $this->db->query($sql, ['id_user' => $userId]);
+
+    $livres = [];
+    while ($row = $res->fetch()) {
+        $livres[] = new Livre($row);
+    }
+    return $livres;
+}
 }

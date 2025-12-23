@@ -11,6 +11,7 @@ class Livre extends AbstractEntity
     private string $content = "";
     private string $image = "";
     private int $idUser;
+    private int $dispo = 1;
 
     /**
      * Setter pour l'id de l'utilisateur. 
@@ -65,6 +66,12 @@ class Livre extends AbstractEntity
     {
         $this->image = $image;
     }
+    public function setDispo(int $dispo): void
+    {
+        $this->dispo = $dispo;
+    }
+
+
 
     /**
      * Getter pour le contenu.
@@ -97,5 +104,9 @@ class Livre extends AbstractEntity
     public function getVendeur(): int
     {
         return $this->idUser;
+    }
+    public function getDispo(): int
+    {
+        return $this->dispo;
     }
 }

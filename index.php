@@ -41,6 +41,21 @@ try {
             $controller->login();
             break;
 
+        case 'compte':
+            $controller = new UserController();
+            $controller->compte();
+            break;
+
+        case 'updatecompte':
+            $controller = new UserController();
+            $controller->updatecompte();
+            break;
+
+        case 'comptepublic':
+            $controller = new UserController();
+            $controller->comptepublic();
+            break;
+
         default:
             throw new Exception("La page demandée n'existe pas.");
     }
