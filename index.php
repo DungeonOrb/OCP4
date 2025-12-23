@@ -26,62 +26,21 @@ try {
             $livreController = new LivreController();
             $livreController->showlivre();
             break;
-
-        case 'addlivre':
-            $livreController = new LivreController();
-            $livreController->addlivre();
-            break;
-
-        case 'addComment':
-            $commentController = new CommentController();
-            $commentController->addComment();
-            break;
-
-
-        // Section admin & connexion. 
-        case 'admin':
-            $adminController = new AdminController();
-            $adminController->showAdmin();
-            break;
-
-        case 'connectionForm':
-            $adminController = new AdminController();
-            $adminController->displayConnectionForm();
-            break;
-
-        case 'connectUser':
-            $adminController = new AdminController();
-            $adminController->connectUser();
-            break;
-
-        case 'disconnectUser':
-            $adminController = new AdminController();
-            $adminController->disconnectUser();
-            break;
-
-        case 'showUpdatelivreForm':
-            $adminController = new AdminController();
-            $adminController->showUpdatelivreForm();
-            break;
-
-        case 'updatelivre':
-            $adminController = new AdminController();
-            $adminController->updatelivre();
-            break;
-
-        case 'deletelivre':
-            $adminController = new AdminController();
-            $adminController->deletelivre();
-            break;
-
-        case 'monitoring':
-            $adminController = new AdminController();
-            $adminController->displayMonitoring();
-            break;
         case 'livre':
             $controller = new LivreController();
             $controller->showDetail();
             break;
+
+        case 'inscription':
+            $controller = new UserController();
+            $controller->inscription();
+            break;
+
+        case 'login':
+            $controller = new UserController();
+            $controller->login();
+            break;
+
         default:
             throw new Exception("La page demandée n'existe pas.");
     }

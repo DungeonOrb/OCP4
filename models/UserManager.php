@@ -4,21 +4,34 @@
  * Classe UserManager pour gérer les requêtes liées aux users et à l'authentification.
  */
 
-class UserManager extends AbstractEntityManager 
+class UserManager extends AbstractEntityManager
 {
-    /**
-     * Récupère un user par son login.
-     * @param string $login
-     * @return ?User
-     */
-    public function getUserByLogin(string $login) : ?User 
+    public function emailExists(string $email): bool
     {
-        $sql = "SELECT * FROM user WHERE login = :login";
-        $result = $this->db->query($sql, ['login' => $login]);
-        $user = $result->fetch();
-        if ($user) {
-            return new User($user);
-        }
-        return null;
+        $sql = "SELECT id FROM user WHERE email = :email LIMIT 1";
+        $res = $this->db->query($sql, ['email' => $email]);
+        return (bool)$res->fetch();
+    }
+
+    // inscription d'un nouvel utilisateur
+    public function createUser(string $nom, string $email, string $hashedPassword, ?string $photo = null): void
+    {
+        $sql = "INSERT INTO user (nom, email, password, photo)
+                VALUES (:nom, :email, :password, :photo)";
+        $this->db->query($sql, [
+            'nom' => $nom,
+            'email' => $email,
+            'password' => $hashedPassword,
+            'photo' => $photo
+        ]);
+        // récupération de l'utilisateur en utilisant son email
+    }
+    public function getUserByEmail(string $email): ?User
+    {
+        $sql = "SELECT * FROM user WHERE email = :email LIMIT 1";
+        $res = $this->db->query($sql, ['email' => $email]);
+        $row = $res->fetch();
+
+        return $row ? new User($row) : null;
     }
 }

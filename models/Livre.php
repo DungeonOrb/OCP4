@@ -2,7 +2,7 @@
 
 /**
  * Entité livre, un livre est défini par les champs
- * id, id_user, title, content, date_creation, date_update, views
+ * id, id_user, title, content, date_creation, date_update,
  */
 class Livre extends AbstractEntity
 {
