@@ -48,12 +48,17 @@ try {
 
         case 'updatecompte':
             $controller = new UserController();
-            $controller->updatecompte();
+            $controller->updateCompte();
             break;
-
+/*
+        case 'uploadphoto':
+            $controller = new UserController();
+            $controller->uploadProfilePhoto($_FILES['photo'] ?? [], (int)($_SESSION['user']['id'] ?? 0));
+            break;
+*/
         case 'comptepublic':
             $controller = new UserController();
-            $controller->comptepublic();
+            $controller->comptePublic();
             break;
 
         default:

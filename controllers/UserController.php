@@ -172,4 +172,77 @@ class UserController
         header('Location: index.php?action=account');
         exit;
     }
+
+    public function comptePublic(): void
+{
+    $id = isset($_GET['id']) && is_numeric($_GET['id']) ? (int)$_GET['id'] : 0;
+    if ($id <= 0) {
+        header('Location: index.php?action=home');
+        exit;
+    }
+
+    $userManager = new UserManager();
+    $livreManager = new LivreManager();
+
+    $user = $userManager->getUserById($id);
+    if (!$user) {
+        $view = new View("Profil introuvable");
+        $view->render("errorPage", ['errorMessage' => "Utilisateur introuvable."]);
+        return;
+    }
+    $livres = $livreManager->getLivresByUserId($id);
+    $view = new View("Profil de " . $user->getNom());
+    $view->render("comptepublic", [
+        'user' => $user,
+        'livres' => $livres
+    ]);
+}
+
+public function uploadProfilePhoto(array $file, int $userId): void
+    {
+        // Sécurité basique
+        if ($userId <= 0) {
+            header('Location: index.php?action=profile&error=not_authenticated');
+            exit;
+        }
+
+        if (empty($file) || !isset($file['error'])) {
+            header('Location: index.php?action=profile&error=no_file');
+            exit;
+        }
+
+        // 1) Upload physique via ton helper
+        // -> doit retourner le nom/chemin relatif (ex: "user_12_abc.jpg") ou null
+        $photoName = new UserController();
+        $photoName = uploadProfilePhoto($file, $userId, 'uploads/');
+
+        if ($photoName === null) {
+            header('Location: index.php?action=profile&error=upload_failed');
+            exit;
+        }
+
+        // 2) Mise à jour BDD
+        $userModel = new UserManager();
+        $ok = $userModel->updatePhoto($userId, $photoName);
+
+        if (!$ok) {
+            // Optionnel : supprimer le fichier si la BDD n'a pas été mise à jour
+            $fullPath = rtrim('uploads/', '/') . '/' . ltrim($photoName, '/');
+            if (is_file($fullPath)) {
+                @unlink($fullPath);
+            }
+
+            header('Location: index.php?action=profile&error=db_update_failed');
+            exit;
+        }
+
+        // 3) Optionnel : mettre à jour la session si tu affiches la photo depuis $_SESSION
+        if (isset($_SESSION['user'])) {
+            $_SESSION['user']['photo'] = $photoName;
+        }
+
+        // 4) Redirect succès
+        header('Location: index.php?action=profile&success=photo_updated');
+        exit;
+    }
 }
