@@ -62,41 +62,9 @@ class LivreManager extends AbstractEntityManager
         }
     }
 
-    /**
-     * Ajoute un livre.
-     * @param livre $livre : le livre à ajouter.
-     * @return void
-     */
-    public function addlivre(Livre $livre): void
-    {
-        $sql = "INSERT INTO livre (id_user, title, content, date_creation) VALUES (:id_user, :title, :content, NOW())";
-        $this->db->query($sql, [
-            'id_user' => $livre->getIdUser(),
-            'title' => $livre->getTitre(),
-            'content' => $livre->getContent()
-        ]);
-    }
 
-    /**
-     * Modifie un livre.
-     * @param livre $livre : l'livre à modifier.
-     * @return void
-     */
-    public function updatelivre(Livre $livre): void
-    {
-        $sql = "UPDATE livre SET title = :title, content = :content, date_update = NOW() WHERE id = :id";
-        $this->db->query($sql, [
-            'title' => $livre->getTitre(),
-            'content' => $livre->getContent(),
-            'id' => $livre->getId()
-        ]);
-    }
 
-    /**
-     * Supprime un livre.
-     * @param int $id : l'id de l'livre à supprimer.
-     * @return void
-     */
+
     public function deletelivre(int $id): void
     {
         $sql = "DELETE FROM livre WHERE id = :id";
@@ -122,14 +90,56 @@ class LivreManager extends AbstractEntityManager
      * récupère les livres d'un utilisateur
      */
     public function getLivresByUserId(int $userId): array
-{
-    $sql = "SELECT * FROM livre WHERE id_user = :id_user ORDER BY id DESC";
-    $res = $this->db->query($sql, ['id_user' => $userId]);
+    {
+        $sql = "SELECT * FROM livre WHERE id_user = :id_user ORDER BY id DESC";
+        $res = $this->db->query($sql, ['id_user' => $userId]);
 
-    $livres = [];
-    while ($row = $res->fetch()) {
-        $livres[] = new Livre($row);
+        $livres = [];
+        while ($row = $res->fetch()) {
+            $livres[] = new Livre($row);
+        }
+        return $livres;
     }
-    return $livres;
+    /**
+     * mise à jour des informations d'un livre
+     */
+    public function updatelivre(Livre $livre) : void
+{
+    $sql = "UPDATE livre 
+            SET titre = :titre,
+                auteur = :auteur,
+                content = :content,
+                image = :image,
+                dispo = :dispo
+            WHERE id = :id";
+
+    $this->db->query($sql, [
+        'titre'  => $livre->getTitre(),
+        'auteur' => $livre->getAuteur(),
+        'content'=> $livre->getContent(),
+        'image'  => $livre->getImage(),
+        'dispo'  => $livre->getDispo(),
+        'id'     => $livre->getId()
+    ]);
+}
+/**
+     * Ajoute un livre.
+     * @param livre $livre : le livre à ajouter.
+     * @return void
+     */
+public function addlivre(Livre $livre) : void
+{
+    $sql = "INSERT INTO livre 
+            (id_user, titre, auteur, content, image, dispo, date_creation)
+            VALUES (:id_user, :titre, :auteur, :content, :image, :dispo, NOW())";
+
+    $this->db->query($sql, [
+        'id_user' => $livre->getIdUser(),
+        'titre'   => $livre->getTitre(),
+        'auteur'  => $livre->getAuteur(),
+        'content' => $livre->getContent(),
+        'image'   => $livre->getImage(),
+        'dispo'   => $livre->getDispo()
+    ]);
 }
 }

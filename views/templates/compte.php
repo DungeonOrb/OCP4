@@ -61,6 +61,9 @@
   </div>
 
   <!-- tableau livres -->
+   <a href="index.php?action=add_livre" class="btn-outline" style="margin-bottom:18px;display:inline-block;">
+    Ajouter un livre
+</a>
   <div class="card table-card">
     <table class="books-table">
       <thead>
@@ -91,8 +94,8 @@
               <?php endif; ?>
             </td>
             <td class="td-actions">
-              <a href="main.php?action=edit_livre&id=<?= $livre->getId() ?>">Éditer</a>
-              <a class="danger" href="main.php?action=delete_livre&id=<?= $livre->getId() ?>">Supprimer</a>
+              <a href="index.php?action=edit_livre&id=<?= $livre->getId() ?>">Éditer</a>
+              <a class="danger" href="index.php?action=delete_livre&id=<?= $livre->getId() ?>">Supprimer</a>
             </td>
           </tr>
         <?php endforeach; ?>

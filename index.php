@@ -50,7 +50,8 @@ try {
             $controller = new UserController();
             $controller->updateCompte();
             break;
-/*
+            
+        /*
         case 'uploadphoto':
             $controller = new UserController();
             $controller->uploadProfilePhoto($_FILES['photo'] ?? [], (int)($_SESSION['user']['id'] ?? 0));
@@ -60,6 +61,17 @@ try {
             $controller = new UserController();
             $controller->comptePublic();
             break;
+
+            case 'edit_livre':
+            $controller = new LivreController();
+            $controller->editlivre();
+            break;
+
+            case 'add_livre':
+            $controller = new LivreController();
+            $controller->addlivre();
+            break;
+            
 
         default:
             throw new Exception("La page demandée n'existe pas.");

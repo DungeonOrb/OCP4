@@ -197,7 +197,7 @@ class UserController
         'livres' => $livres
     ]);
 }
-
+/*
 public function uploadProfilePhoto(array $file, int $userId): void
     {
         // Sécurité basique
@@ -213,7 +213,6 @@ public function uploadProfilePhoto(array $file, int $userId): void
 
         // 1) Upload physique via ton helper
         // -> doit retourner le nom/chemin relatif (ex: "user_12_abc.jpg") ou null
-        $photoName = new UserController();
         $photoName = uploadProfilePhoto($file, $userId, 'uploads/');
 
         if ($photoName === null) {
@@ -245,4 +244,5 @@ public function uploadProfilePhoto(array $file, int $userId): void
         header('Location: index.php?action=profile&success=photo_updated');
         exit;
     }
+        */
 }
