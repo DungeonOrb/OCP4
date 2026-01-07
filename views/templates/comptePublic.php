@@ -20,7 +20,9 @@
         <span class="mini-value"><?= count($livres) ?> livres</span>
       </div>
 
-      <a class="btn-outline" href="main.php?action=message&to=<?= $user->getId() ?>">Écrire un message</a>
+      <a class="btn-outline" href="index.php?action=messages&to=<?= $user->getId() ?>">
+    Écrire un message
+</a>
     </div>
 
 

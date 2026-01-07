@@ -27,4 +27,5 @@ spl_autoload_register(function($className) {
         require_once 'views/' . $className . '.php';
     }
     
+    require_once 'controllers/MessageController.php';
 });

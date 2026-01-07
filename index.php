@@ -71,6 +71,11 @@ try {
             $controller = new LivreController();
             $controller->addlivre();
             break;
+
+            case 'messages':
+            $controller = new MessageController();
+            $controller->inbox();
+            break;
             
 
         default:

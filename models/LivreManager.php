@@ -11,7 +11,7 @@ class LivreManager extends AbstractEntityManager
      */
     public function getAllLivres(): array
     {
-        $sql = "SELECT * FROM livre";
+        $sql = "SELECT * FROM livre INNER JOIN user ON livre.id_user = user.id ORDER BY titre";
         $result = $this->db->query($sql);
         $livres = [];
 

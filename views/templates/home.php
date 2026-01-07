@@ -26,7 +26,7 @@
         <?php endforeach; ?>
     </div>
 
-    <a href="#" class="green-button">Voir tous les livres</a>
+    <a href="index.php?action=livres" class="green-button">Voir tous les livres</a>
 </section>
 
 

@@ -49,23 +49,32 @@ class LivreController
      * Affiche la page "livre_detail" et s'occupe de la fonction de recherche
      */
     public function showDetail(): void
-    {
-        if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-            header('Location: index.php?action=livres');
-            exit;
-        }
+{
+    $livreManager = new LivreManager();
+    $userManager  = new UserManager();
 
-        $livreManager = new LivreManager();
-        $livre = $livreManager->getLivreById((int)$_GET['id']);
-
-        if (!$livre) {
-            header('Location: index.php?action=livres');
-            exit;
-        }
-
-        $view = new View("Détail du livre");
-        $view->render("livre_detail", ['livre' => $livre]);
+    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+        header('Location: index.php?action=livres');
+        exit;
     }
+
+    $id    = (int)$_GET['id'];
+    $livre = $livreManager->getlivreById($id);
+
+    if (!$livre) {
+        $view = new View("Livre introuvable");
+        $view->render("errorPage", ['errorMessage' => "Ce livre n'existe pas."]);
+        return;
+    }
+
+    $owner = $userManager->getUserById($livre->getIdUser());
+
+    $view = new View($livre->getTitre());
+    $view->render("livre_detail", [
+        'livre' => $livre,
+        'owner' => $owner
+    ]);
+}
 
     public function editlivre(): void
 {
