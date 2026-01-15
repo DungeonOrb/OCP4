@@ -186,7 +186,7 @@ class LivreController
                 $livreManager->addlivre($livre);
 
                 $_SESSION['flash_success'] = "Livre ajouté ✅";
-                header('Location: index.php?action=account');
+                header('Location: index.php?action=compte');
                 exit;
             }
         }
@@ -207,7 +207,7 @@ class LivreController
         }
 
         if ($livreId <= 0) {
-            header('Location: index.php?action=account');
+            header('Location: index.php?action=compte');
             exit;
         }
 
@@ -215,13 +215,13 @@ class LivreController
         $livre = $livreManager->getlivreById($livreId);
 
         if (!$livre) {
-            header('Location: index.php?action=account');
+            header('Location: index.php?action=compte');
             exit;
         }
 
         // sécurité: seul le propriétaire peut changer la photo
         if ($livre->getIdUser() !== $userId) {
-            header('Location: index.php?action=account');
+            header('Location: index.php?action=compte');
             exit;
         }
 

@@ -1,4 +1,4 @@
-<a href="main.php?action=account" class="back-link">&larr; retour</a>
+<a href="index.php?action=compte" class="back-link">&larr; retour</a>
 
 <section class="edit-book">
   <h1>Ajouter un livre</h1>

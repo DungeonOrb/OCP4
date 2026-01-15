@@ -142,8 +142,6 @@ body {
   margin-bottom: 34px;
 }
 
-/* on réutilise les mêmes styles que pour les cartes de la page "livres" */
-/* (si ce n’est pas déjà fait, garde les versions compactes qu’on a vues avant) */
 .latest-grid .book-card {
   background: #fff;
   border-radius: 8px;
@@ -580,14 +578,6 @@ page d'inscription & connexion
   object-fit: cover;
 }
 
-.edit-photo {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 12px;
-  color: #9b9b9b;
-  text-decoration: underline;
-}
-
 .profile-sep {
   width: 70%;
   height: 1px;
@@ -948,35 +938,54 @@ page d'inscription & connexion
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.edit-photo-wrapper {
+.edit-photo-wrapper{
   width: 100%;
-  aspect-ratio: 4/3;
-  background: #f4f4f4;
+  height: 420px;              
   border-radius: 6px;
-  overflow: hidden;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.edit-photo {
+.edit-photo{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;        
+  display:block;
 }
 
-.edit-photo-link {
+.edit-photo-link{
+  display:block;
   margin-top: 10px;
   font-size: 12px;
-  color: #9b9b9b;
-  text-align: center;
+  color:#9b9b9b;
+  text-align: right;   
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .edit-right {
   padding-left: 10px;
 }
 
-.edit-form .form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+.edit-form input,
+.edit-form textarea,
+.edit-form select{
+  width: 100%;
+  height: 44px;               
+  box-sizing: border-box;
+  border-radius: 6px;
+  border: 1px solid #e3e3e3;
+  background: #f1f6f8;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.edit-form textarea{
+  height: 220px;              
+  resize: none;               
 }
 
 .field {

@@ -135,7 +135,7 @@ class LivreManager extends AbstractEntityManager
     public function addlivre(Livre $livre) : void
 {
     $sql = "INSERT INTO livre (id_user, titre, auteur, content, image, dispo)
-            VALUES (:id_user, :titre, :auteur, :content, :image, :dispo, NOW())";
+            VALUES (:id_user, :titre, :auteur, :content, :image, :dispo)";
 
     $this->db->query($sql, [
         'id_user' => $livre->getIdUser(),

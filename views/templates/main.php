@@ -32,7 +32,7 @@
         </nav>
 
         <div class="header-right">
-            <a href="#" class="icon-link">Messagerie <span class="notif">0</span></a>
+            <a href="index.php?action=messages" class="icon-link">Messagerie <span class="notif">0</span></a>
             <a href="index.php?action=compte" class="icon-link">Mon compte</a>
             <a href="index.php?action=login" class="login-btn">Connexion</a>
         </div>

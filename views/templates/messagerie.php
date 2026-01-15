@@ -7,8 +7,11 @@
 
       <?php foreach ($discussions as $conv): ?>
         <a class="conv-item <?= ($discussionId == $conv['id']) ? 'active' : '' ?>"
-           href="index.php?action=messages&discussion=<?= $conv['id'] ?>">
-          <div class="avatar-small"></div>
+          href="index.php?action=messages&discussion=<?= $conv['id'] ?>">
+          <?php
+          $avatar = !empty($conv['other_photo']) ? $conv['other_photo'] : 'img/avatar-placeholder.png';
+          ?>
+          <img class="avatar-small" src="<?= $avatar ?>" alt="">
           <div class="conv-text">
             <div class="conv-top">
               <span class="conv-name"><?= $conv['other_name'] ?></span>
@@ -39,7 +42,10 @@
       <?php else: ?>
         <header class="conv-header">
           <?php if ($otherUser): ?>
-            <div class="avatar-small"></div>
+            <?php
+            $avatar = !empty($conv['other_photo']) ? $conv['other_photo'] : 'img/avatar-placeholder.png';
+            ?>
+            <img class="avatar-small" src="<?= $avatar ?>" alt="">
             <span class="conv-title"><?= $otherUser->getNom() ?></span>
           <?php endif; ?>
         </header>
@@ -58,13 +64,13 @@
           <?php endforeach; ?>
 
           <?php if (empty($messages)): ?>
-            <p class="no-msg">Aucun message pour l’instant. Démarrez la conversation 😊</p>
+            <p class="no-msg">Aucun message pour l’instant. Démarrez la conversation</p>
           <?php endif; ?>
         </div>
 
 
         <form class="msg-form" method="POST"
-              action="index.php?action=messages&discussion=<?= $discussionId ?>">
+          action="index.php?action=messages&discussion=<?= $discussionId ?>">
           <input type="text" name="content" placeholder="Tapez votre message ici" required>
           <button type="submit">Envoyer</button>
         </form>

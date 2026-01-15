@@ -18,7 +18,7 @@
       <div class="edit-photo-wrapper">
         <img src="<?= $livre->getImage() ?>" alt="" class="edit-photo">
       </div>
-      <<form action="index.php?action=uploadbookphoto&id=<?= $livre->getId() ?>" method="POST" enctype="multipart/form-data" style="display:none;">
+      <form action="index.php?action=uploadbookphoto&id=<?= $livre->getId() ?>" method="POST" enctype="multipart/form-data" style="display:none;">
   <input id="bookPhotoInput" type="file" name="photo" accept="image/*"
          onchange="this.form.submit()">
 </form>

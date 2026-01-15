@@ -29,37 +29,37 @@ class DiscussionManager extends AbstractEntityManager
 
 
     public function getDiscussionsForUser(int $userId): array
-{
-    $sql = "
+    {
+        $sql = "
         SELECT d.id,
                IF(d.user1_id = :uid, u2.nom, u1.nom) AS other_name,
+               IF(d.user1_id = :uid, u2.photo, u1.photo) AS other_photo,
                m.content AS last_message,
                m.created_at AS last_date
         FROM discussion d
         JOIN user u1 ON u1.id = d.user1_id
         JOIN user u2 ON u2.id = d.user2_id
         LEFT JOIN message m ON m.id = (
-            SELECT id FROM message 
+            SELECT id FROM message
             WHERE discussion_id = d.id
             ORDER BY created_at DESC
             LIMIT 1
         )
         WHERE d.user1_id = :uid OR d.user2_id = :uid
-        ORDER BY 
-            -- on met celles avec message en premier
+        ORDER BY
             (last_date IS NULL) ASC,
             last_date DESC,
             d.created_at DESC
     ";
 
-    $res = $this->db->query($sql, ['uid' => $userId]);
-    return $res->fetchAll();
-}
-public function getDiscussionById(int $id): ?array
-{
-    $sql = "SELECT * FROM discussion WHERE id = :id LIMIT 1";
-    $res = $this->db->query($sql, ['id' => $id]);
-    $row = $res->fetch();
-    return $row ?: null;
-}
+        $res = $this->db->query($sql, ['uid' => $userId]);
+        return $res->fetchAll();
+    }
+    public function getDiscussionById(int $id): ?array
+    {
+        $sql = "SELECT * FROM discussion WHERE id = :id LIMIT 1";
+        $res = $this->db->query($sql, ['id' => $id]);
+        $row = $res->fetch();
+        return $row ?: null;
+    }
 }
