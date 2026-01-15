@@ -11,7 +11,9 @@ class LivreManager extends AbstractEntityManager
      */
     public function getAllLivres(): array
     {
-        $sql = "SELECT * FROM livre INNER JOIN user ON livre.id_user = user.id ORDER BY titre";
+        $sql = "SELECT l.*, u.nom AS vendeur_nom
+            FROM livre l
+            JOIN user u ON u.id = l.id_user";
         $result = $this->db->query($sql);
         $livres = [];
 
@@ -38,7 +40,10 @@ class LivreManager extends AbstractEntityManager
      */
     public function getlivreById(int $id): ?Livre
     {
-        $sql = "SELECT * FROM livre WHERE id = :id";
+        $sql = "SELECT l.*, u.nom AS vendeur_nom
+            FROM livre l
+            JOIN user u ON u.id = l.id_user
+            WHERE l.id = :id";
         $result = $this->db->query($sql, ['id' => $id]);
         $livre = $result->fetch();
         if ($livre) {
@@ -103,9 +108,9 @@ class LivreManager extends AbstractEntityManager
     /**
      * mise à jour des informations d'un livre
      */
-    public function updatelivre(Livre $livre) : void
-{
-    $sql = "UPDATE livre 
+    public function updatelivre(Livre $livre): void
+    {
+        $sql = "UPDATE livre 
             SET titre = :titre,
                 auteur = :auteur,
                 content = :content,
@@ -113,24 +118,23 @@ class LivreManager extends AbstractEntityManager
                 dispo = :dispo
             WHERE id = :id";
 
-    $this->db->query($sql, [
-        'titre'  => $livre->getTitre(),
-        'auteur' => $livre->getAuteur(),
-        'content'=> $livre->getContent(),
-        'image'  => $livre->getImage(),
-        'dispo'  => $livre->getDispo(),
-        'id'     => $livre->getId()
-    ]);
-}
-/**
+        $this->db->query($sql, [
+            'titre'  => $livre->getTitre(),
+            'auteur' => $livre->getAuteur(),
+            'content' => $livre->getContent(),
+            'image'  => $livre->getImage(),
+            'dispo'  => $livre->getDispo(),
+            'id'     => $livre->getId()
+        ]);
+    }
+    /**
      * Ajoute un livre.
      * @param livre $livre : le livre à ajouter.
      * @return void
      */
-public function addlivre(Livre $livre) : void
+    public function addlivre(Livre $livre) : void
 {
-    $sql = "INSERT INTO livre 
-            (id_user, titre, auteur, content, image, dispo, date_creation)
+    $sql = "INSERT INTO livre (id_user, titre, auteur, content, image, dispo)
             VALUES (:id_user, :titre, :auteur, :content, :image, :dispo, NOW())";
 
     $this->db->query($sql, [
@@ -141,5 +145,37 @@ public function addlivre(Livre $livre) : void
         'image'   => $livre->getImage(),
         'dispo'   => $livre->getDispo()
     ]);
+}
+    // obtenir uniquement un nombre x de livres
+    public function getLastLivres(int $limit = 4): array
+    {
+        $limit = (int)$limit;
+
+        $sql = "SELECT l.*, u.nom AS vendeur_nom
+            FROM livre l
+            JOIN user u ON u.id = l.id_user
+            ORDER BY l.id DESC
+            LIMIT $limit";
+
+        $res = $this->db->query($sql);
+        $livres = [];
+        while ($row = $res->fetch()) {
+            $livres[] = new Livre($row);
+        }
+        return $livres;
+    }
+    public function getImageById(int $id): ?string
+{
+    $sql = "SELECT image FROM livre WHERE id = :id LIMIT 1";
+    $res = $this->db->query($sql, ['id' => $id]);
+    $row = $res->fetch();
+    return $row ? ($row['image'] ?? null) : null;
+}
+
+public function updateImage(int $livreId, string $path): bool
+{
+    $sql = "UPDATE livre SET image = :img WHERE id = :id";
+    $this->db->query($sql, ['img' => $path, 'id' => $livreId]);
+    return true;
 }
 }

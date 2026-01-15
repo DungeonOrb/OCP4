@@ -1,6 +1,6 @@
 <?php
 
-abstract class AbstractEntity 
+abstract class AbstractEntity
 {
     // Par défaut l'id vaut -1, ce qui permet de vérifier facilement si l'entité est nouvelle ou pas. 
     protected int $id = -1;
@@ -11,7 +11,7 @@ abstract class AbstractEntity
      * 
      * @param array $data
      */
-    public function __construct(array $data = []) 
+    public function __construct(array $data = [])
     {
         if (!empty($data)) {
             $this->hydrate($data);
@@ -25,7 +25,7 @@ abstract class AbstractEntity
      * Les underscore sont transformés en camelCase (ex: date_creation devient setDateCreation).
      * @return void
      */
-    protected function hydrate(array $data) : void 
+    protected function hydrate(array $data): void
     {
         foreach ($data as $key => $value) {
             $method = 'set' . str_replace('_', '', ucwords($key, '_'));
@@ -40,17 +40,17 @@ abstract class AbstractEntity
      * @param int $id
      * @return void
      */
-    public function setId(int $id) : void 
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    
+
     /**
      * Getter pour l'id.
      * @return int
      */
-    public function getId() : int 
+    public function getId(): int
     {
         return $this->id;
     }

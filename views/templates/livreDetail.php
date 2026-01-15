@@ -22,13 +22,15 @@
         <h2 class="book-section-title">PROPRIÉTAIRE</h2>
 
         <?php if ($owner): ?>
-          <a class="owner-pill" href="index.php?action=profile&id=<?= $owner->getId() ?>">
-            <div class="owner-avatar"></div>
-            <span><?= $owner->getNom() ?></span>
-          </a>
-        <?php else: ?>
-          <p class="no-owner">Utilisateur inconnu</p>
-        <?php endif; ?>
+  <?php
+    $photo = $owner->getPhoto();
+    $src = ($photo && $photo !== '') ? $photo : 'img/avatar-placeholder.png';
+  ?>
+  <a class="owner-pill" href="main.php?action=profile&id=<?= $owner->getId() ?>">
+    <img class="owner-avatar-img" src="<?= htmlspecialchars($src) ?>" alt="">
+    <span><?= htmlspecialchars($owner->getNom()) ?></span>
+  </a>
+<?php endif; ?>
       </div>
 
       <?php if ($owner): ?>

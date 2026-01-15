@@ -1,3 +1,4 @@
+
 <a href="index.php?action=compte" class="back-link">&larr; retour</a>
 
 <section class="edit-book">
@@ -17,11 +18,18 @@
       <div class="edit-photo-wrapper">
         <img src="<?= $livre->getImage() ?>" alt="" class="edit-photo">
       </div>
-      <p class="edit-photo-link">Modifier la photo (plus tard)</p>
+      <<form action="index.php?action=uploadbookphoto&id=<?= $livre->getId() ?>" method="POST" enctype="multipart/form-data" style="display:none;">
+  <input id="bookPhotoInput" type="file" name="photo" accept="image/*"
+         onchange="this.form.submit()">
+</form>
+
+<label for="bookPhotoInput" class="edit-photo-link" style="cursor:pointer;">
+  Modifier la photo
+</label>
     </div>
 
     <div class="edit-right">
-      <form method="POST" action="index.php?action=edit_livre&id=<?= $livre->getId() ?>" class="edit-form">
+      <form method="POST" action="index.php?action=editLivre&id=<?= $livre->getId() ?>" class="edit-form">
         <div class="form-row">
           <div class="field">
             <label for="titre">Titre</label>

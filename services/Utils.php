@@ -87,4 +87,69 @@ class Utils {
         return $_REQUEST[$variableName] ?? $defaultValue;
     }
 
+
+    /**
+     * Upload image avec validations. Retourne le chemin relatif (ex: uploads/users/user_12_xxx.jpg) ou null.
+     */
+    public static function handleImageUpload(array $file, string $uploadDir, string $namePrefix): ?string
+    {
+        if (empty($file) || ($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+            return null;
+        }
+
+        // taille max 2 Mo
+        $maxSize = 2 * 1024 * 1024;
+        if (($file['size'] ?? 0) > $maxSize) {
+            return null;
+        }
+
+        // extensions autorisées
+        $allowedExt = ['jpg', 'jpeg', 'png', 'webp'];
+        $ext = strtolower(pathinfo($file['name'] ?? '', PATHINFO_EXTENSION));
+        if (!in_array($ext, $allowedExt, true)) {
+            return null;
+        }
+
+        // vrai fichier upload
+        $tmp = $file['tmp_name'] ?? '';
+        if ($tmp === '' || !is_uploaded_file($tmp)) {
+            return null;
+        }
+
+        // vérifier que c'est une image
+        if (@getimagesize($tmp) === false) {
+            return null;
+        }
+
+        // créer dossier si besoin
+        if (!is_dir($uploadDir)) {
+            @mkdir($uploadDir, 0775, true);
+        }
+
+        // nom safe
+        $safeName = $namePrefix . '_' . bin2hex(random_bytes(8)) . '.' . $ext;
+
+        $dest = rtrim($uploadDir, '/\\') . DIRECTORY_SEPARATOR . $safeName;
+
+        if (!move_uploaded_file($tmp, $dest)) {
+            return null;
+        }
+
+        // chemin web-friendly
+        return str_replace('\\', '/', $dest);
+    }
+
+    /**
+     * Supprime une image si elle est dans un dossier autorisé (anti suppression arbitraire).
+     */
+    public static function deleteUploadedImage(?string $path, string $allowedPrefix): void
+    {
+        if (!$path) return;
+
+        // sécurité: supprimer uniquement si ça commence par le dossier attendu
+        if (str_starts_with($path, $allowedPrefix) && is_file($path)) {
+            @unlink($path);
+        }
+    }
 }
+

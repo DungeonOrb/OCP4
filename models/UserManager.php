@@ -61,16 +61,20 @@ class UserManager extends AbstractEntityManager
         $sql = "UPDATE user SET password = :password WHERE id = :id";
         $this->db->query($sql, ['password' => $hashedPassword, 'id' => $id]);
     }
-    /*
-       public function updatePhoto(int $userId, string $photoName): bool
+    public function updatePhoto(int $id, string $photo): bool
     {
-        $sql = "UPDATE users SET photo = :photo, updated_at = NOW() WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
+        $sql = "UPDATE user SET photo = :photo WHERE id = :id";
+        $res = $this->db->query($sql, ['photo' => $photo, 'id' => $id]);
 
-        return $stmt->execute([
-            ':photo' => $photoName,
-            ':id'    => $userId,
-        ]);
+        return $res !== false;
     }
-    */
+
+    public function getPhotoById(int $id): ?string
+    {
+        $sql = "SELECT photo FROM user WHERE id = :id";
+        $stmt = $this->db->query($sql, ['id' => $id]);
+        $row = $stmt ? $stmt->fetch() : false;
+
+        return $row && !empty($row['photo']) ? $row['photo'] : null;
+    }
 }

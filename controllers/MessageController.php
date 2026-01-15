@@ -29,9 +29,9 @@ class MessageController
         }
 
 
-        $discussionId = isset($_GET['discussion']) && is_numeric($_GET['discussion']) 
-                        ? (int)$_GET['discussion'] 
-                        : 0;
+        $discussionId = isset($_GET['discussion']) && is_numeric($_GET['discussion'])
+            ? (int)$_GET['discussion']
+            : 0;
 
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $discussionId > 0) {
@@ -52,14 +52,14 @@ class MessageController
         if ($discussionId > 0) {
             $messages = $messageManager->getMessagesByDiscussion($discussionId);
 
-$row = $discussionManager->getDiscussionById($discussionId);
-if ($row) {
-    $otherId = ((int)$row['user1_id'] === $userId) 
-        ? (int)$row['user2_id'] 
-        : (int)$row['user1_id'];
+            $row = $discussionManager->getDiscussionById($discussionId);
+            if ($row) {
+                $otherId = ((int)$row['user1_id'] === $userId)
+                    ? (int)$row['user2_id']
+                    : (int)$row['user1_id'];
 
-    $otherUser = $userManager->getUserById($otherId);
-}
+                $otherUser = $userManager->getUserById($otherId);
+            }
         }
 
         $view = new View("Messagerie");
@@ -68,7 +68,7 @@ if ($row) {
             'messages'     => $messages,
             'discussionId' => $discussionId,
             'otherUser'    => $otherUser,
-            'currentUserId'=> $userId
+            'currentUserId' => $userId
         ]);
     }
 }

@@ -13,6 +13,8 @@ class Livre extends AbstractEntity
     private int $idUser;
     private int $dispo = 1;
 
+    private string $Nom = "";
+
     /**
      * Setter pour l'id de l'utilisateur. 
      * @param int $idUser
@@ -70,6 +72,10 @@ class Livre extends AbstractEntity
     {
         $this->dispo = $dispo;
     }
+        public function setVendeurNom(string $Nom): void
+    {
+        $this->Nom = $Nom;
+    }
 
 
 
@@ -108,5 +114,10 @@ class Livre extends AbstractEntity
     public function getDispo(): int
     {
         return $this->dispo;
+    }
+    
+    public function getVendeurNom(): string
+    {
+        return $this->Nom;
     }
 }

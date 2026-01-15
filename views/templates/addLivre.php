@@ -1,35 +1,41 @@
-<a href="main.php?action=compte" class="back-link">&larr; retour</a>
+<a href="main.php?action=account" class="back-link">&larr; retour</a>
 
 <section class="edit-book">
   <h1>Ajouter un livre</h1>
 
-  <?php if (!empty($error)): ?>
+  <?php if (!empty($error ?? '')): ?>
     <p class="alert alert-error"><?= htmlspecialchars($error) ?></p>
   <?php endif; ?>
 
   <div class="edit-card">
     <div class="edit-left">
       <label class="block-label">Photo</label>
+
+      <!-- preview -->
       <div class="edit-photo-wrapper">
-        <!-- placeholder / image par défaut -->
-        <img src="img/default-book.jpg" alt="" class="edit-photo">
+        <img id="previewBookImg" src="img/default-book.jpg" class="edit-photo" alt="">
       </div>
-      <p class="edit-photo-link">Image (a faire plus tard).</p>
+
+      <!-- input file -->
+      <label class="edit-photo-link" style="cursor:pointer;">
+        Modifier la photo
+        <input id="bookPhotoInput" type="file" name="photo" accept="image/*" form="addBookForm" style="display:none;">
+      </label>
     </div>
 
     <div class="edit-right">
-      <form method="POST" action="main.php?action=add_livre" class="edit-form">
+      <form id="addBookForm" method="POST" action="index.php?action=addLivre" enctype="multipart/form-data" class="edit-form">
         <div class="form-row">
           <div class="field">
             <label for="titre">Titre</label>
-            <input type="text" id="titre" name="titre"
-                   value="<?= isset($_POST['titre']) ? htmlspecialchars($_POST['titre']) : '' ?>" required>
+            <input type="text" id="titre" name="titre" required
+                   value="<?= isset($_POST['titre']) ? htmlspecialchars($_POST['titre']) : '' ?>">
           </div>
 
           <div class="field">
             <label for="auteur">Auteur</label>
-            <input type="text" id="auteur" name="auteur"
-                   value="<?= isset($_POST['auteur']) ? htmlspecialchars($_POST['auteur']) : '' ?>" required>
+            <input type="text" id="auteur" name="auteur" required
+                   value="<?= isset($_POST['auteur']) ? htmlspecialchars($_POST['auteur']) : '' ?>">
           </div>
         </div>
 
@@ -51,3 +57,16 @@
     </div>
   </div>
 </section>
+
+<script>
+  const input = document.getElementById('bookPhotoInput');
+  const img = document.getElementById('previewBookImg');
+
+  if (input) {
+    input.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      img.src = URL.createObjectURL(file);
+    });
+  }
+</script>

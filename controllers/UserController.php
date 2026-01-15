@@ -174,75 +174,74 @@ class UserController
     }
 
     public function comptePublic(): void
-{
-    $id = isset($_GET['id']) && is_numeric($_GET['id']) ? (int)$_GET['id'] : 0;
-    if ($id <= 0) {
-        header('Location: index.php?action=home');
-        exit;
-    }
-
-    $userManager = new UserManager();
-    $livreManager = new LivreManager();
-
-    $user = $userManager->getUserById($id);
-    if (!$user) {
-        $view = new View("Profil introuvable");
-        $view->render("errorPage", ['errorMessage' => "Utilisateur introuvable."]);
-        return;
-    }
-    $livres = $livreManager->getLivresByUserId($id);
-    $view = new View("Profil de " . $user->getNom());
-    $view->render("comptepublic", [
-        'user' => $user,
-        'livres' => $livres
-    ]);
-}
-/*
-public function uploadProfilePhoto(array $file, int $userId): void
     {
-        // Sécurité basique
+        $id = isset($_GET['id']) && is_numeric($_GET['id']) ? (int)$_GET['id'] : 0;
+        if ($id <= 0) {
+            header('Location: index.php?action=home');
+            exit;
+        }
+
+        $userManager = new UserManager();
+        $livreManager = new LivreManager();
+
+        $user = $userManager->getUserById($id);
+        if (!$user) {
+            $view = new View("Profil introuvable");
+            $view->render("errorPage", ['errorMessage' => "Utilisateur introuvable."]);
+            return;
+        }
+        $livres = $livreManager->getLivresByUserId($id);
+        $view = new View("Profil de " . $user->getNom());
+        $view->render("comptepublic", [
+            'user' => $user,
+            'livres' => $livres
+        ]);
+    }
+    public function uploadProfilePhoto(array $file, int $userId): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         if ($userId <= 0) {
-            header('Location: index.php?action=profile&error=not_authenticated');
+            header('Location: index.php?action=login');
             exit;
         }
 
-        if (empty($file) || !isset($file['error'])) {
-            header('Location: index.php?action=profile&error=no_file');
-            exit;
-        }
-
-        // 1) Upload physique via ton helper
-        // -> doit retourner le nom/chemin relatif (ex: "user_12_abc.jpg") ou null
-        $photoName = uploadProfilePhoto($file, $userId, 'uploads/');
-
-        if ($photoName === null) {
-            header('Location: index.php?action=profile&error=upload_failed');
-            exit;
-        }
-
-        // 2) Mise à jour BDD
         $userModel = new UserManager();
-        $ok = $userModel->updatePhoto($userId, $photoName);
+
+        // ancienne photo
+        $oldPhoto = $userModel->getPhotoById($userId);
+
+        // upload nouveau fichier
+        $newPhoto = Utils::handleImageUpload(
+            $file,
+            'uploads/users',           // dossier dédié
+            'user_' . $userId          // prefix
+        );
+
+        if ($newPhoto === null) {
+            $_SESSION['flash_error'] = "Échec de l'upload de la photo.";
+            header('Location: index.php?action=compte');
+            exit;
+        }
+
+        // update DB
+        $ok = $userModel->updatePhoto($userId, $newPhoto);
 
         if (!$ok) {
-            // Optionnel : supprimer le fichier si la BDD n'a pas été mise à jour
-            $fullPath = rtrim('uploads/', '/') . '/' . ltrim($photoName, '/');
-            if (is_file($fullPath)) {
-                @unlink($fullPath);
-            }
-
-            header('Location: index.php?action=profile&error=db_update_failed');
+            // rollback fichier si DB fail
+            Utils::deleteUploadedImage($newPhoto, 'uploads/users');
+            $_SESSION['flash_error'] = "Impossible de sauvegarder la photo.";
+            header('Location: index.php?action=compte');
             exit;
         }
 
-        // 3) Optionnel : mettre à jour la session si tu affiches la photo depuis $_SESSION
-        if (isset($_SESSION['user'])) {
-            $_SESSION['user']['photo'] = $photoName;
-        }
+        // supprimer ancienne photo
+        Utils::deleteUploadedImage($oldPhoto, 'uploads/users');
 
-        // 4) Redirect succès
-        header('Location: index.php?action=profile&success=photo_updated');
+        $_SESSION['flash_success'] = "Photo de profil mise à jour ✅";
+        header('Location: index.php?action=compte');
         exit;
     }
-        */
 }

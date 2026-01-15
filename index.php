@@ -50,33 +50,36 @@ try {
             $controller = new UserController();
             $controller->updateCompte();
             break;
-            
-        /*
+
         case 'uploadphoto':
             $controller = new UserController();
-            $controller->uploadProfilePhoto($_FILES['photo'] ?? [], (int)($_SESSION['user']['id'] ?? 0));
+            $controller->uploadProfilePhoto($_FILES['photo'] ?? [], (int)($_SESSION['user_id'] ?? 0));
             break;
-*/
+
+        case 'uploadbookphoto':
+            $controller = new LivreController();
+            $controller->uploadBookPhoto($_FILES['photo'] ?? [], (int)($_GET['id'] ?? 0));
+            break;
+
         case 'comptepublic':
             $controller = new UserController();
             $controller->comptePublic();
             break;
 
-            case 'edit_livre':
+        case 'editLivre':
             $controller = new LivreController();
             $controller->editlivre();
             break;
 
-            case 'add_livre':
+        case 'addLivre':
             $controller = new LivreController();
             $controller->addlivre();
             break;
 
-            case 'messages':
+        case 'messages':
             $controller = new MessageController();
             $controller->inbox();
             break;
-            
 
         default:
             throw new Exception("La page demandée n'existe pas.");

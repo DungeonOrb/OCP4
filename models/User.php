@@ -8,6 +8,7 @@ class User extends AbstractEntity
     private string $nom;
     private string $email;
     private string $password;
+    private ?string $photo = null;
 
     /**
      * Setter pour le login.
@@ -60,5 +61,14 @@ class User extends AbstractEntity
     public function getNom(): string
     {
         return $this->nom;
+    }
+    public function setPhoto(?string $photo): void
+    {
+        $this->photo = $photo;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
     }
 }

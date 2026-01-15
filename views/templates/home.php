@@ -15,18 +15,29 @@
 
 
 <section class="latest-books">
+  <div class="latest-inner">
     <h2>Les derniers livres ajoutés</h2>
 
-    <div class="book-grid">
-        <?php foreach ($livres as $livre): ?>
-            <div class="book-card">
-                <h2><?= $livre->getTitre() ?></h2>
-                <p><?= $livre->getContent(400) ?></p>
+    <div class="latest-grid">
+      <?php foreach ($livres as $livre): ?>
+        <a class="book-link" href="index.php?action=livre&id=<?= $livre->getId() ?>">
+          <article class="book-card">
+            <div class="book-image-wrapper">
+              <img src="<?= $livre->getImage() ?>" alt="">
             </div>
-        <?php endforeach; ?>
+
+            <div class="book-body">
+              <h3><?= $livre->getTitre() ?></h3>
+              <p class="author"><?= $livre->getAuteur() ?></p>
+              <p class="seller">Vendu par : <?= $livre->getVendeurNom() ?></p>
+            </div>
+          </article>
+        </a>
+      <?php endforeach; ?>
     </div>
 
     <a href="index.php?action=livres" class="green-button">Voir tous les livres</a>
+  </div>
 </section>
 
 

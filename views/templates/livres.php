@@ -31,7 +31,7 @@
             <div class="book-body">
               <h2><?= $livre->getTitre() ?></h2>
               <p class="author"><?= $livre->getAuteur() ?></p>
-              <p class="seller">Vendu par : <?= (string)$livre->getVendeur() ?></p>
+              <p class="seller">Vendu par : <?= $livre->getVendeurNom() ?></p>
             </div>
           </article>
         </a>
