@@ -81,6 +81,11 @@ try {
             $controller->inbox();
             break;
 
+        case 'disconnect':
+            $controller = new UserController();
+            $controller->disconnect();
+            break;
+
         default:
             throw new Exception("La page demandée n'existe pas.");
     }

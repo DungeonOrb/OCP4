@@ -6,7 +6,7 @@ body {
 
 
 .main-header {
-  width: 70%;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -627,7 +627,7 @@ page d'inscription & connexion
 }
 
 .account-form input {
-  width: 100%;
+  width: 95%;
   height: 52px;
   border: 1px solid #eee;
   border-radius: 6px;

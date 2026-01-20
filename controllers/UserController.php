@@ -121,7 +121,7 @@ class UserController
         }
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: index.php?action=account');
+            header('Location: index.php?action=compte');
             exit;
         }
 
@@ -131,13 +131,13 @@ class UserController
 
         if ($nom === '' || $email === '') {
             $_SESSION['flash_error'] = "Nom et email sont obligatoires.";
-            header('Location: index.php?action=account');
+            header('Location: index.php?action=compte');
             exit;
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['flash_error'] = "Email invalide.";
-            header('Location: index.php?action=account');
+            header('Location: index.php?action=compte');
             exit;
         }
 
@@ -146,7 +146,7 @@ class UserController
 
         if ($userManager->emailExistsForOtherUser($email, $userId)) {
             $_SESSION['flash_error'] = "Cet email est déjà utilisé.";
-            header('Location: index.php?action=account');
+            header('Location: index.php?action=compte');
             exit;
         }
 
@@ -157,7 +157,7 @@ class UserController
         if ($newPassword !== '') {
             if (strlen($newPassword) < 6) {
                 $_SESSION['flash_error'] = "Le mot de passe doit faire au moins 6 caractères.";
-                header('Location: index.php?action=account');
+                header('Location: index.php?action=compte');
                 exit;
             }
             $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
@@ -169,7 +169,7 @@ class UserController
         $_SESSION['user_email'] = $email;
 
         $_SESSION['flash_success'] = "Informations mises à jour.";
-        header('Location: index.php?action=account');
+        header('Location: index.php?action=compte');
         exit;
     }
 
@@ -237,11 +237,17 @@ class UserController
             exit;
         }
 
-        // supprimer ancienne photo
+        // supprimer l'ancienne photo
         Utils::deleteUploadedImage($oldPhoto, 'uploads/users');
 
         $_SESSION['flash_success'] = "Photo de profil mise à jour ✅";
         header('Location: index.php?action=compte');
         exit;
+    }
+    // déconnecte l'utilisateur et le renvoie sur la page d'accueil
+    public function disconnect(): void {
+    unset($_SESSION);
+header('Location: index.php?action=home');
+            exit;
     }
 }

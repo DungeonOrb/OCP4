@@ -52,7 +52,7 @@
         <div class="step">Proposez un échange et discutez avec d'autres passionnés de lecture.</div>
     </div>
 
-    <a href="#" class="green-button">Voir tous les livres</a>
+    <a href="index.php?action=livres" class="green-button">Voir tous les livres</a>
 </section>
 
 <img src="./img/bookbanner.png" alt="Livres" class="banner">
