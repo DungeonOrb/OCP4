@@ -246,7 +246,7 @@ class UserController
     }
     // déconnecte l'utilisateur et le renvoie sur la page d'accueil
     public function disconnect(): void {
-    unset($_SESSION);
+    unset($_SESSION['user_id']);
 header('Location: index.php?action=home');
             exit;
     }
