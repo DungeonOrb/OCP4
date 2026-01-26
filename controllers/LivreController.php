@@ -76,7 +76,7 @@ class LivreController
         ]);
     }
 
-    public function editlivre(): void
+    public function editLivre(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();

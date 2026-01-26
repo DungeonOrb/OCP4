@@ -36,5 +36,5 @@
     </p>
   </div>
 
-  <div class="auth-right"><img src="img/books.png" alt=""></div>
+  <div class="auth-right"><img src="img/books.png" alt="Tas de Livres"></div>
 </section>

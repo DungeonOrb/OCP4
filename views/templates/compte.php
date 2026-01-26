@@ -81,7 +81,7 @@
         <?php foreach ($livres as $livre): ?>
           <tr>
             <td class="td-photo">
-              <img src="<?= $livre->getImage() ?>" alt="">
+              <img src="<?= $livre->getImage() ?>" alt="<?= $livre->getTitre() ?>">
             </td>
             <td><?= $livre->getTitre() ?></td>
             <td><?= $livre->getAuteur() ?></td>

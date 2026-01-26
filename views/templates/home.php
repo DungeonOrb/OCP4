@@ -23,7 +23,7 @@
         <a class="book-link" href="index.php?action=livre&id=<?= $livre->getId() ?>">
           <article class="book-card">
             <div class="book-image-wrapper">
-              <img src="<?= $livre->getImage() ?>" alt="">
+              <img src="<?= $livre->getImage() ?>" alt="<?= $livre->getTitre() ?>">
             </div>
 
             <div class="book-body">

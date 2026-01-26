@@ -68,12 +68,12 @@ try {
 
         case 'editLivre':
             $controller = new LivreController();
-            $controller->editlivre();
+            $controller->editLivre();
             break;
 
         case 'addLivre':
             $controller = new LivreController();
-            $controller->addlivre();
+            $controller->addLivre();
             break;
 
         case 'messages':

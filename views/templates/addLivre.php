@@ -13,7 +13,7 @@
 
       <!-- preview -->
       <div class="edit-photo-wrapper">
-        <img id="previewBookImg" src="img/default-book.jpg" class="edit-photo" alt="">
+        <img id="previewBookImg" src="img/default-book.jpg" class="edit-photo" alt="Photo de Livres par Défaut">
       </div>
 
       <!-- input file -->

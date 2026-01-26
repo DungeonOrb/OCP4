@@ -11,7 +11,7 @@
           <?php
           $avatar = !empty($conv['other_photo']) ? $conv['other_photo'] : 'img/avatar-placeholder.png';
           ?>
-          <img class="avatar-small" src="<?= $avatar ?>" alt="">
+          <img class="avatar-small" src="<?= $avatar ?>" alt="<?= $otherUser->getNom() ?>">
           <div class="conv-text">
             <div class="conv-top">
               <span class="conv-name"><?= $conv['other_name'] ?></span>
@@ -45,7 +45,7 @@
             <?php
             $avatar = !empty($conv['other_photo']) ? $conv['other_photo'] : 'img/avatar-placeholder.png';
             ?>
-            <img class="avatar-small" src="<?= $avatar ?>" alt="">
+            <img class="avatar-small" src="<?= $avatar ?>" alt="<?= $otherUser->getNom() ?>">
             <span class="conv-title"><?= $otherUser->getNom() ?></span>
           <?php endif; ?>
         </header>

@@ -27,7 +27,7 @@
     $src = ($photo && $photo !== '') ? $photo : 'img/avatar-placeholder.png';
   ?>
   <a class="owner-pill" href="index.php?action=comptepublic&id=<?= $owner->getId() ?>">
-    <img class="owner-avatar-img" src="<?= htmlspecialchars($src) ?>" alt="">
+    <img class="owner-avatar-img" src="<?= htmlspecialchars($src) ?>" alt="<?= $owner->getNom() ?>">
     <span><?= htmlspecialchars($owner->getNom()) ?></span>
   </a>
 <?php endif; ?>

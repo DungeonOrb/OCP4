@@ -7,7 +7,7 @@
 
           $photo = method_exists($user, 'getPhoto') ? $user->getPhoto() : null;
         ?>
-        <img src="<?= $photo ?  $photo : 'img/avatar-placeholder.png' ?>" alt="">
+        <img src="<?= $photo ?  $photo : 'img/avatar-placeholder.png' ?>" alt="Photo de Profil par Défaut">
       </div>
 
       <div class="profile-sep"></div>
@@ -41,7 +41,7 @@
         <?php foreach ($livres as $livre): ?>
           <tr>
             <td class="td-photo">
-              <img src="<?=  $livre->getImage() ?>" alt="">
+              <img src="<?=  $livre->getImage() ?>" alt="<?= $livre->getTitre() ?>">
             </td>
             <td><?=  $livre->getTitre() ?></td>
             <td><?=  $livre->getAuteur() ?></td>

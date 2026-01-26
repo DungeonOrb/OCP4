@@ -12,6 +12,6 @@
 
     define('DB_HOST', 'localhost');
     define('DB_NAME', 'tomtroc');
-    define('DB_USER', '[nom de votre utilisateur]');
-    define('DB_PASS', '[votre mot de passe]');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
 
