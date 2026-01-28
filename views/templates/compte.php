@@ -20,10 +20,14 @@
         <img src="<?= $photo ? $photo : 'img/books.png' ?>" alt="">
         <a class="edit-photo" href="#" onclick="document.getElementById('photoInput').click(); return false;">modifier</a>
 
-<form action="index.php?action=uploadphoto" method="POST" enctype="multipart/form-data" style="display:none;">
-  <input id="photoInput" type="file" name="photo" accept="image/*"
-         onchange="this.form.submit()">
-</form>
+        <form action="index.php?action=uploadphoto" method="POST" enctype="multipart/form-data" style="display:none;">
+          <label for="photoInput" class="invis-input">
+            Ajouter une photo de profile
+          </label>
+          <input id="photoInput" type="file" name="photo" accept="image/*"
+            onchange="this.form.submit()">
+
+        </form>
       </div>
 
       <div class="profile-sep"></div>
@@ -61,9 +65,9 @@
   </div>
 
   <!-- tableau livres -->
-   <a href="index.php?action=addLivre" class="btn-outline" style="margin-bottom:18px;display:inline-block;">
+  <a href="index.php?action=addLivre" class="btn-outline" style="margin-bottom:18px;display:inline-block;">
     Ajouter un livre
-</a>
+  </a>
   <div class="card table-card">
     <table class="books-table">
       <thead>

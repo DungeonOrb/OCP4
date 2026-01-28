@@ -14,9 +14,9 @@
 
   <div class="edit-card">
     <div class="edit-left">
-      <label class="block-label">Photo</label>
+      <p class="block-label">Photo</p>
       <div class="edit-photo-wrapper">
-        <img src="<?= $livre->getImage() ?>" alt="<?= $livre->getImage() ?>" class="edit-photo">
+        <img src="<?= $livre->getImage() ?>" alt="Image du Livre" class="edit-photo">
       </div>
       <form action="index.php?action=uploadbookphoto&id=<?= $livre->getId() ?>" method="POST" enctype="multipart/form-data" style="display:none;">
   <input id="bookPhotoInput" type="file" name="photo" accept="image/*"

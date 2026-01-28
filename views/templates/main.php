@@ -32,9 +32,10 @@
         </nav>
 
         <div class="header-right">
+            
+            <?php if (isset ($_SESSION['user_id'])){ ?>
             <a href="index.php?action=messages" class="icon-link">Messagerie <span class="notif">0</span></a>
             <a href="index.php?action=compte" class="icon-link">Mon compte</a>
-            <?php if (isset ($_SESSION['user_id'])){ ?>
             <a href="index.php?action=disconnect" class="login-btn">Déconnexion</a> <?php } else {?> <a href="index.php?action=login" class="login-btn">Connexion</a> <?php }?>
         </div>
     </header>

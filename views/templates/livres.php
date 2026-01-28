@@ -6,14 +6,20 @@
 
       <form class="search-bar" method="GET" action="index.php">
         <input type="hidden" name="action" value="livres">
+
+        <label for="search-input" class="invis-input">
+          Rechercher un livre
+        </label>
+
         <input
+          id="search-input"
           type="text"
           name="q"
-          placeholder="Rechercher un livre"
-          value="<?= isset($_GET['q']) ? $_GET['q'] : '' ?>"
-        >
+          value="<?= isset($_GET['q']) ? htmlspecialchars($_GET['q']) : '' ?>">
+
         <button type="submit">Rechercher</button>
       </form>
+
     </div>
 
     <?php if (empty($livres)): ?>

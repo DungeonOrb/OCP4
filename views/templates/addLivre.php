@@ -9,7 +9,7 @@
 
   <div class="edit-card">
     <div class="edit-left">
-      <label class="block-label">Photo</label>
+      <p class="block-label">Photo</p>
 
       <!-- preview -->
       <div class="edit-photo-wrapper">
@@ -17,9 +17,10 @@
       </div>
 
       <!-- input file -->
-      <label class="edit-photo-link" style="cursor:pointer;">
-        Modifier la photo
+      
         <input id="bookPhotoInput" type="file" name="photo" accept="image/*" form="addBookForm" style="display:none;">
+        <label for="bookPhotoInput" class="edit-photo-link" style="cursor:pointer;">
+        Modifier la photo
       </label>
     </div>
 

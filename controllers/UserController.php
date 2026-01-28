@@ -66,7 +66,7 @@ class UserController
                         $_SESSION['user_nom'] = $user->getNom();
                         $_SESSION['user_email'] = $user->getEmail();
 
-                        header('Location: index.php?action=livres');
+                        header('Location: index.php?action=compte');
                         exit;
                     }
                 }

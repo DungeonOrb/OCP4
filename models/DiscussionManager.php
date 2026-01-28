@@ -24,7 +24,7 @@ class DiscussionManager extends AbstractEntityManager
         $sql = "INSERT INTO discussion (user1_id, user2_id) VALUES (:u1, :u2)";
         $this->db->query($sql, ['u1' => $userId, 'u2' => $otherId]);
 
-        return (int)$this->db->getLastInsertId();
+        return (int)$row['id'];
     }
 
 

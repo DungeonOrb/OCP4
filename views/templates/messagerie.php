@@ -3,7 +3,7 @@
   <div class="messages-layout">
 
     <aside class="conv-list">
-      <h2>Messagerie</h2>
+      <h1>Messagerie</h1>
 
       <?php foreach ($discussions as $conv): ?>
         <a class="conv-item <?= ($discussionId == $conv['id']) ? 'active' : '' ?>"
@@ -11,7 +11,7 @@
           <?php
           $avatar = !empty($conv['other_photo']) ? $conv['other_photo'] : 'img/avatar-placeholder.png';
           ?>
-          <img class="avatar-small" src="<?= $avatar ?>" alt="<?= $otherUser->getNom() ?>">
+          <img class="avatar-small" src="<?= $avatar ?>" alt="Photo de Profil">
           <div class="conv-text">
             <div class="conv-top">
               <span class="conv-name"><?= $conv['other_name'] ?></span>
@@ -71,7 +71,10 @@
 
         <form class="msg-form" method="POST"
           action="index.php?action=messages&discussion=<?= $discussionId ?>">
-          <input type="text" name="content" placeholder="Tapez votre message ici" required>
+          <input id="sendmsg" type="text" name="content" placeholder="Tapez votre message ici" required>
+          <label for="sendmsg" class="invis-input">
+          écrire un message
+        </label>
           <button type="submit">Envoyer</button>
         </form>
       <?php endif; ?>
